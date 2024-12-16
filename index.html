@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+   <style>  </style>
+    
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="msg" autocomplete="off" /><button>Wyslij</button>
+    </form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+  <script>
+    var socket = io();
+
+    $('form').submit(function(){
+      socket.emit('message', $('#msg').val());
+      $('#msg').val('');
+      return false;
+    });
+
+    socket.on('message', function(msg){
+      $('#messages').append($('<li>').text(msg));
+      $("html, body").scrollTop($(document).height());
+    });
+  </script>
+  </body>
+</html>
